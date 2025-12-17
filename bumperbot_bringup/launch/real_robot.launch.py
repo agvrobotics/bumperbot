@@ -28,7 +28,7 @@ def generate_launch_description():
                 executable="joy_node",
                 name="joystick",
                 parameters=[os.path.join(get_package_share_directory("bumperbot_controller"), "config", "joy_config.yaml"),
-                            {"use_sim_time": LaunchConfiguration("use_sim_time")}]
+                            {"use_sim_time": False}],
             ),
             Node(
                 package="rviz2",

@@ -33,6 +33,13 @@ def generate_launch_description():
                     "use_sim_time": "False"
                 }.items()
             ),
+            IncludeLaunchDescription(
+                os.path.join(
+                    get_package_share_directory("bumperbot_navigation"),
+                    "launch",
+                    "navigation.launch.py"
+                ),
+            ),
             Node(
                 package="rviz2",
                 executable="rviz2",
@@ -44,7 +51,7 @@ def generate_launch_description():
                 ],
                 output="screen",
                 parameters=[{"use_sim_time": False}],
-            )
+            ),
         ]
     )
 
@@ -103,14 +110,6 @@ def generate_launch_description():
                             "slam.launch.py"
                         ),
                         condition=IfCondition(use_slam)
-                    ),
-
-                    IncludeLaunchDescription(
-                        os.path.join(
-                            get_package_share_directory("bumperbot_navigation"),
-                            "launch",
-                            "navigation.launch.py"
-                        ),
                     ),
 
                     Node(

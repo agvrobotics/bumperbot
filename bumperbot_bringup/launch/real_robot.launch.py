@@ -23,7 +23,7 @@ def generate_launch_description():
     master = GroupAction(
         condition = IfCondition(use_master),
         actions = [
-                IncludeLaunchDescription(
+            IncludeLaunchDescription(
                 os.path.join(
                     get_package_share_directory("bumperbot_controller"),
                     "launch",
@@ -32,6 +32,18 @@ def generate_launch_description():
                 launch_arguments={
                     "use_sim_time": "False"
                 }.items()
+            ),
+            Node(
+                package="rviz2",
+                executable="rviz2",
+                arguments=["-d", os.path.join(
+                        get_package_share_directory("nav2_bringup"),
+                        "rviz",
+                        "nav2_default_view.rviz"
+                    )
+                ],
+                output="screen",
+                parameters=[{"use_sim_time": "False"}],
             )
         ]
     )

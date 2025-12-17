@@ -23,22 +23,12 @@ def generate_launch_description():
     master = GroupAction(
         condition = IfCondition(use_master),
         actions = [
-            IncludeLaunchDescription(
-                os.path.join(
-                    get_package_share_directory("bumperbot_controller"),
-                    "launch",
-                    "joystick_teleop.launch.py"
-                ),
-                launch_arguments={
-                    "use_sim_time": "False"
-                }.items()
-            ),
-            IncludeLaunchDescription(
-                os.path.join(
-                    get_package_share_directory("bumperbot_navigation"),
-                    "launch",
-                    "navigation.launch.py"
-                ),
+            Node(
+                package="joy",
+                executable="joy_node",
+                name="joystick",
+                parameters=[os.path.join(get_package_share_directory("bumperbot_controller"), "config", "joy_config.yaml"),
+                            {"use_sim_time": LaunchConfiguration("use_sim_time")}]
             ),
             Node(
                 package="rviz2",
@@ -111,7 +101,23 @@ def generate_launch_description():
                         ),
                         condition=IfCondition(use_slam)
                     ),
-
+                    IncludeLaunchDescription(
+                        os.path.join(
+                            get_package_share_directory("bumperbot_controller"),
+                            "launch",
+                            "joystick_teleop.launch.py"
+                        ),
+                        launch_arguments={
+                            "use_sim_time": "False"
+                        }.items()
+                    ),
+                    IncludeLaunchDescription(
+                        os.path.join(
+                            get_package_share_directory("bumperbot_navigation"),
+                            "launch",
+                            "navigation.launch.py"
+                        ),
+                    ),
                     Node(
                         package="bumperbot_utils",
                         executable="safety_stop.py",

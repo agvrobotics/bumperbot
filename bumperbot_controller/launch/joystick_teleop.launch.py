@@ -23,14 +23,6 @@ def generate_launch_description():
         parameters=[os.path.join(get_package_share_directory("bumperbot_controller"), "config", "joy_teleop.yaml"),
                     {"use_sim_time": LaunchConfiguration("use_sim_time")}],
     )
-
-    joy_node = Node(
-        package="joy",
-        executable="joy_node",
-        name="joystick",
-        parameters=[os.path.join(get_package_share_directory("bumperbot_controller"), "config", "joy_config.yaml"),
-                    {"use_sim_time": LaunchConfiguration("use_sim_time")}]
-    )
     
     twist_mux_launch = IncludeLaunchDescription(
         os.path.join(
@@ -58,7 +50,6 @@ def generate_launch_description():
         [
             use_sim_time_arg,
             joy_teleop,
-            joy_node,
             twist_mux_launch,
             twist_relay_node,
         ]

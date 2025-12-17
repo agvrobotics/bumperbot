@@ -43,7 +43,7 @@ def generate_launch_description():
                     )
                 ],
                 output="screen",
-                parameters=[{"use_sim_time": "False"}],
+                parameters=[{"use_sim_time": False}],
             )
         ]
     )
